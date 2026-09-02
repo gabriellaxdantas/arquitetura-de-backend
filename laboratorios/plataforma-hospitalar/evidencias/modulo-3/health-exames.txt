@@ -1,0 +1,10 @@
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0100     34 100     34   0      0   2675      0                              0100     34 100     34   0      0   2656      0                              0100     34 100     34   0      0   2643      0                              0
+HTTP/1.1 200 OK
+date: Wed, 02 Sep 2026 11:38:45 GMT
+server: uvicorn
+content-length: 34
+content-type: application/json
+
+{"status":"ok","servico":"exames"}

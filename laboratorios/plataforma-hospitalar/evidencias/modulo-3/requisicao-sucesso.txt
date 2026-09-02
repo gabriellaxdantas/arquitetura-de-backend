@@ -1,0 +1,10 @@
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0100    161 100    102 100     59   2083   1205                              0100    161 100    102 100     59   2078   1202                              0100    161 100    102 100     59   2073   1199                              0
+HTTP/1.1 201 Created
+date: Wed, 02 Sep 2026 11:38:50 GMT
+server: uvicorn
+content-length: 102
+content-type: application/json
+
+{"beneficiario_id":"paciente-001","codigo_exame":"HEM-001","solicitacao_id":1,"situacao":"solicitado"}

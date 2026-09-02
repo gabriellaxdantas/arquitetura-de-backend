@@ -1,0 +1,35 @@
+=== docker version ===
+Client:
+ Cloud integration: v1.0.35+desktop.13
+ Version:           26.1.1
+ API version:       1.45
+ Go version:        go1.21.9
+ Git commit:        4cf5afa
+ Built:             Tue Apr 30 11:48:43 2024
+ OS/Arch:           windows/amd64
+ Context:           default
+
+Server: Docker Desktop 4.30.0 (149282)
+ Engine:
+  Version:          26.1.1
+  API version:      1.45 (minimum version 1.24)
+  Go version:       go1.21.9
+  Git commit:       ac2de55
+  Built:            Tue Apr 30 11:48:28 2024
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.31
+  GitCommit:        e377cd56a71523140ca6ae87e30244719194a521
+ runc:
+  Version:          1.1.12
+  GitCommit:        v1.1.12-0-g51d5e94
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+=== docker compose version ===
+Docker Compose version v2.27.0-desktop.2
+
+=== python version ===
+Python 3.12.10

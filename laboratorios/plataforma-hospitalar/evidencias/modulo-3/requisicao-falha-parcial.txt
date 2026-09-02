@@ -1,0 +1,10 @@
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0100     59   0      0 100     59      0     49   00:01   00:01             49100     59   0      0 100     59      0     26   00:02   00:02             26100     59   0      0 100     59      0     18   00:03   00:03             18100    107 100     48 100     59     12     14   00:04   00:03   00:01     18100    107 100     48 100     59     12     14   00:04   00:03   00:01     18100    107 100     48 100     59     12     14   00:04   00:03   00:01     18
+HTTP/1.1 503 Service Unavailable
+date: Wed, 02 Sep 2026 11:38:57 GMT
+server: uvicorn
+content-length: 48
+content-type: application/json
+
+{"detail":{"codigo":"dependencia_indisponivel"}}
