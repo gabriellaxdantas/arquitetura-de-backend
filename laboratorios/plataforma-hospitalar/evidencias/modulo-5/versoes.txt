@@ -1,0 +1,19 @@
+Validação de configuração — Oficina RabbitMQ e Consumidor Idempotente
+=======================================================================
+
+python --version
+Python 3.12.10
+
+pytest --version
+pytest 9.1.1
+
+aio-pika: 10.0.1
+pydantic: 2.13.4
+
+docker version
+docker compose version
+-> Docker Engine NAO disponivel neste ambiente (comando "docker" nao encontrado
+   no PATH, Docker Desktop nao instalado). A parte da oficina que depende de um
+   broker RabbitMQ real (infra/compose.eventos.yml) nao pode ser executada nem
+   demonstrada aqui. Ver observacoes.md para o que foi validado sem o broker e
+   os comandos a rodar manualmente numa maquina com Docker.

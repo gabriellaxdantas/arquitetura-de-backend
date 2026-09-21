@@ -35,23 +35,27 @@ class ProcessedEventStore:
     def __init__(self, path: Path | str):
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        with self._connect() as connection:
-            connection.executescript(
-                """
-                CREATE TABLE IF NOT EXISTS processed_events (
-                    event_id TEXT PRIMARY KEY,
-                    attempts INTEGER NOT NULL,
-                    processed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-                );
-                CREATE TABLE IF NOT EXISTS billing_effects (
-                    event_id TEXT PRIMARY KEY,
-                    exam_id TEXT NOT NULL,
-                    patient_id TEXT NOT NULL,
-                    result_reference TEXT NOT NULL,
-                    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-                );
-                """
-            )
+        connection = self._connect()
+        try:
+            with connection:
+                connection.executescript(
+                    """
+                    CREATE TABLE IF NOT EXISTS processed_events (
+                        event_id TEXT PRIMARY KEY,
+                        attempts INTEGER NOT NULL,
+                        processed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                    );
+                    CREATE TABLE IF NOT EXISTS billing_effects (
+                        event_id TEXT PRIMARY KEY,
+                        exam_id TEXT NOT NULL,
+                        patient_id TEXT NOT NULL,
+                        result_reference TEXT NOT NULL,
+                        created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                    );
+                    """
+                )
+        finally:
+            connection.close()
 
     def _connect(self) -> sqlite3.Connection:
         return sqlite3.connect(self.path)
@@ -59,39 +63,49 @@ class ProcessedEventStore:
     def record(self, event: ResultadoLaboratorialDisponibilizadoV1) -> ProcessResult:
         """Registra toda tentativa e produz o efeito apenas na primeira entrega."""
 
-        with self._connect() as connection:
-            connection.execute("BEGIN IMMEDIATE")
-            row = connection.execute(
-                "SELECT attempts FROM processed_events WHERE event_id = ?", (event.event_id,)
-            ).fetchone()
-            if row:
-                attempts = int(row[0]) + 1
+        connection = self._connect()
+        try:
+            with connection:
+                connection.execute("BEGIN IMMEDIATE")
+                row = connection.execute(
+                    "SELECT attempts FROM processed_events WHERE event_id = ?", (event.event_id,)
+                ).fetchone()
+                if row:
+                    attempts = int(row[0]) + 1
+                    connection.execute(
+                        "UPDATE processed_events SET attempts = ? WHERE event_id = ?",
+                        (attempts, event.event_id),
+                    )
+                    return ProcessResult(processed=False, attempts=attempts)
                 connection.execute(
-                    "UPDATE processed_events SET attempts = ? WHERE event_id = ?",
-                    (attempts, event.event_id),
+                    "INSERT INTO processed_events(event_id, attempts) VALUES (?, 1)",
+                    (event.event_id,),
                 )
-                return ProcessResult(processed=False, attempts=attempts)
-            connection.execute(
-                "INSERT INTO processed_events(event_id, attempts) VALUES (?, 1)",
-                (event.event_id,),
-            )
-            connection.execute(
-                """INSERT INTO billing_effects(event_id, exam_id, patient_id, result_reference)
-                   VALUES (?, ?, ?, ?)""",
-                (event.event_id, event.exam_id, event.patient_id, event.result_reference),
-            )
-            return ProcessResult(processed=True, attempts=1)
+                connection.execute(
+                    """INSERT INTO billing_effects(event_id, exam_id, patient_id, result_reference)
+                       VALUES (?, ?, ?, ?)""",
+                    (event.event_id, event.exam_id, event.patient_id, event.result_reference),
+                )
+                return ProcessResult(processed=True, attempts=1)
+        finally:
+            connection.close()
 
     def attempts_for(self, event_id: str) -> int:
-        with self._connect() as connection:
+        connection = self._connect()
+        try:
             row = connection.execute(
                 "SELECT attempts FROM processed_events WHERE event_id = ?", (event_id,)
             ).fetchone()
+        finally:
+            connection.close()
         return int(row[0]) if row else 0
 
     def business_effect_count(self) -> int:
-        with self._connect() as connection:
+        connection = self._connect()
+        try:
             return int(connection.execute("SELECT COUNT(*) FROM billing_effects").fetchone()[0])
+        finally:
+            connection.close()
 
 
 class ConsumidorFaturamento:

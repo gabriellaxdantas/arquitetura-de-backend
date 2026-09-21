@@ -1,0 +1,14 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Gabriella\Desktop\Arquitetura de Backend\arquitetura-software\laboratorios\plataforma-hospitalar\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Gabriella\Desktop\Arquitetura de Backend\arquitetura-software\laboratorios\plataforma-hospitalar
+configfile: pyproject.toml
+plugins: anyio-4.14.2, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 3 items
+
+tests/test_event_idempotency.py::test_duplicate_event_has_one_business_effect_and_two_attempts PASSED [ 33%]
+tests/test_event_idempotency.py::test_invalid_event_is_rejected_without_crashing_consumer PASSED [ 66%]
+tests/test_event_idempotency.py::test_live_invalid_event_reaches_dead_letter_queue SKIPPED [100%]
+
+======================== 2 passed, 1 skipped in 0.30s =========================
