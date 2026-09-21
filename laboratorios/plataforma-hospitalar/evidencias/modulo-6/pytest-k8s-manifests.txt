@@ -1,0 +1,11 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0
+rootdir: laboratorios/plataforma-hospitalar
+configfile: pyproject.toml
+collected 3 items
+
+tests/test_k8s_manifests.py::test_kubernetes_manifests_define_a_safe_hospital_api_rollout PASSED [ 33%]
+tests/test_k8s_manifests.py::test_kind_cluster_maps_only_the_local_lab_port PASSED [ 66%]
+tests/test_k8s_manifests.py::test_deployment_runs_the_health_checked_api PASSED [100%]
+
+============================== 3 passed in 0.16s ==============================

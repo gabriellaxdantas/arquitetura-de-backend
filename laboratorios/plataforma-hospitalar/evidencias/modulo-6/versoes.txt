@@ -1,0 +1,23 @@
+Validação de ambiente — Oficina de Ferramentas: Docker, kind e Kubernetes locais
+=================================================================================
+
+python --version (venv do laboratório)
+Python 3.12.10
+
+pytest --version
+pytest 9.1.1
+
+PyYAML: 6.0.3
+fastapi/uvicorn: instalados via `pip install -e .` (ver pyproject.toml)
+
+docker version
+kind version
+kubectl version --client
+-> Nenhum dos três está instalado ou presente no PATH deste ambiente (Windows,
+   sem Docker Desktop, sem Chocolatey/Scoop com kind/kubectl). Verificado em
+   Git Bash e em PowerShell; também não há pasta "Program Files\Docker".
+   A parte da oficina que depende de construir a imagem, criar o cluster kind
+   e aplicar manifests via kubectl não pôde ser executada nem demonstrada
+   neste ambiente. Ver observacoes.md para o que foi validado sem essas
+   ferramentas e os comandos completos para rodar manualmente em uma máquina
+   com Docker Desktop, kind e kubectl instalados.
